@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/sprite.dart';
 
 class PlayerComponent extends SpriteAnimationComponent
-    with HasGameReference<FlameGame> {
-  PlayerComponent({super.priority});
+    with HasGameReference<FlameGame>, TapCallbacks {
+  final void Function()? onTap;
+
+  PlayerComponent({super.priority, this.onTap});
 
   @override
   FutureOr<void> onLoad() async {
@@ -36,6 +39,7 @@ class PlayerComponent extends SpriteAnimationComponent
 
     animation = SpriteAnimation(frames);
 
+    // Allow tap hit-testing on the sprite bounding box
     // Scale up the pixel art character (6x)
     const scaleFactor = 6.0;
     size = Vector2(frameWidth * scaleFactor, frameHeight * scaleFactor);
@@ -43,6 +47,12 @@ class PlayerComponent extends SpriteAnimationComponent
     // Center on screen
     anchor = Anchor.center;
     position = Vector2(game.size.x / 2, game.size.y / 2);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    onTap?.call();
+    event.continuePropagation = false;
   }
 
   @override

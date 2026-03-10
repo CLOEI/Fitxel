@@ -5,6 +5,10 @@ import 'cloud_layer.dart';
 import 'player_component.dart';
 
 class FitxelGame extends FlameGame {
+  final void Function()? onCharacterTapped;
+
+  FitxelGame({this.onCharacterTapped});
+
   @override
   Color backgroundColor() => const Color(0x00000000); // transparent
 
@@ -28,6 +32,11 @@ class FitxelGame extends FlameGame {
     }
 
     // Add the player character on top of clouds
-    add(PlayerComponent(priority: cloudPaths.length));
+    add(
+      PlayerComponent(
+        priority: cloudPaths.length,
+        onTap: onCharacterTapped,
+      ),
+    );
   }
 }
