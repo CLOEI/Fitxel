@@ -11,6 +11,7 @@ import '../widgets/equipment_slot.dart';
 import '../widgets/equipment_picker.dart';
 import '../widgets/mission_card.dart';
 import 'missions_page.dart';
+import 'profile_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -65,6 +66,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                     expPercent: player.expPercent,
                   ),
                   EnergyBar(energy: player.energy, maxEnergy: player.maxEnergy),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ProfilePage(),
+                      ),
+                    ),
+                    child: Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF00E5FF).withValues(alpha: 0.1),
+                        border: Border.all(
+                          color: const Color(0xFF00E5FF).withValues(alpha: 0.3),
+                          width: 1.5,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.person_rounded,
+                        color: Color(0xFF00E5FF),
+                        size: 20,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
